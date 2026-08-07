@@ -18,6 +18,12 @@ STATIC_DIR = os.path.join(BASE_DIR, 'static')
 
 app = Flask(__name__, template_folder=TEMPLATE_DIR, static_folder=STATIC_DIR)
 
+@app.after_request
+def add_cors_header(response):
+    # The UI is served independently from this API in production.
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    return response
+
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Helpers
