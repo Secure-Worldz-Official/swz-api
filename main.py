@@ -16,13 +16,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
 
-app = Flask(__name__, template_folder=TEMPLATE_DIR, static_folder=STATIC_DIR)
+app = Flask(__name__)
 
 @app.after_request
 def add_cors_header(response):
     # The UI is served independently from this API in production.
     response.headers["Access-Control-Allow-Origin"] = "*"
     return response
+
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -480,7 +481,12 @@ def score_badge(domain: str):
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return jsonify({
+        "service": "swz-api",
+        "status": "ok",
+        "score_endpoint": "/score/<domain>",
+        "badge_endpoint": "/badge/<domain>.svg",
+    })
 
 
 if __name__ == '__main__':
