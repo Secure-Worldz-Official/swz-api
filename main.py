@@ -472,9 +472,9 @@ def score_badge(domain: str):
                     headers={"Cache-Control": "no-cache, max-age=3600"})
 
 
-# @app.route('/')
-# def index():
-#     return {'status':200}
+@app.route('/')
+def index():
+    return render_template('index.html')
 
 
 if __name__ == '__main__':
